@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CS 300 Course Planner code review.">
+  <title>Code Review | Dmitrii Shostak</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="container" aria-label="Main navigation">
+      <a class="brand" href="index.html">Dmitrii Shostak</a>
+      <a aria-current="page" href="code-review.html">Code Review</a>
+    </nav>
+  </header>
+  <main class="container article">
+    <p class="eyebrow">CS 499 · Milestone One</p>
+    <h1>CS 300 Course Planner Code Review</h1>
+    <p class="lead">This review examines the original C++ Course Planner before its capstone enhancements. The application helps academic advisors load a course catalog, print courses in order, and find course prerequisites.</p>
+
+    <section aria-labelledby="video-title">
+      <h2 id="video-title">Code review video</h2>
+      <div class="video-frame">
+        <!-- Set this source to the reviewed MP4 or a public hosted MP4 URL before publishing. -->
+        <video controls preload="metadata" aria-label="CS 300 Course Planner code review video">
+          <source src="assets/code-review.mp4" type="video/mp4">
+          Your browser does not support HTML5 video. Use the downloadable MP4 instead.
+        </video>
+      </div>
+      <p class="note">This player is ready for the reviewed MP4 file. Verify playback after adding the video source.</p>
+    </section>
+
+    <section aria-labelledby="functionality-title">
+      <h2 id="functionality-title">Existing functionality</h2>
+      <p>The original project reads course data from a CSV file. It stores a course number, title, and prerequisite list for each course. A menu allows a user to load the data, print the catalog in course-number order, or search for one course and display its prerequisites.</p>
+    </section>
+
+    <section aria-labelledby="analysis-title">
+      <h2 id="analysis-title">Review findings</h2>
+      <p>The original project uses one source file, raw pointers, a plain binary search tree, and repeated vector searches for prerequisite validation. The tree can become one-sided when courses are inserted in sorted order. That creates O(n) worst-case insertion and lookup behavior. The CSV-only design also means the catalog is temporary and cannot support controlled updates after the program exits.</p>
+    </section>
+
+    <section aria-labelledby="plan-title">
+      <h2 id="plan-title">Enhancement plan</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Software design and engineering</h3>
+          <p>Separate file access, validation, catalog storage, and menu behavior into focused C++ classes. Use safer ownership, clearer errors, and automated tests.</p>
+        </article>
+        <article class="card">
+          <h3>Algorithms and data structures</h3>
+          <p>Replace the unbalanced tree with an AVL tree and use hash-set membership for course and prerequisite checks. Compare tree height and lookup counts for sorted and random input.</p>
+        </article>
+        <article class="card">
+          <h3>Databases</h3>
+          <p>Add SQLite storage for courses and prerequisite relationships. Use constraints, transactions, indexes, and prepared statements to protect data quality.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer class="container">© Dmitrii Shostak · Computer Science ePortfolio</footer>
+</body>
+</html>
