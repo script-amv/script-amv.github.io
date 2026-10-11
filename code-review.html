@@ -8,13 +8,18 @@
   <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <nav class="container" aria-label="Main navigation">
       <a class="brand" href="index.html">Dmitrii Shostak</a>
       <a aria-current="page" href="code-review.html">Code Review</a>
+      <a href="software-design.html">Design</a>
+      <a href="algorithms.html">Algorithms</a>
+      <a href="databases.html">Databases</a>
+      <a href="artifacts.html">Files &amp; Tests</a>
     </nav>
   </header>
-  <main class="container article">
+  <main id="main" class="container article">
     <p class="eyebrow">CS 499 · Milestone One</p>
     <h1>CS 300 Course Planner Code Review</h1>
     <p class="lead">This review examines the original C++ Course Planner before its capstone enhancements. The application helps academic advisors load a course catalog, print courses in order, and find course prerequisites.</p>
@@ -22,12 +27,13 @@
     <section aria-labelledby="video-title">
       <h2 id="video-title">Code review video</h2>
       <div class="video-frame">
-        <!-- Set this source to the reviewed MP4 or a public hosted MP4 URL before publishing. -->
         <video controls preload="metadata" aria-label="CS 300 Course Planner code review video">
           <source src="assets/code-review.mp4" type="video/mp4">
           Your browser does not support HTML5 video. Use the downloadable MP4 instead.
         </video>
       </div>
+      <p><a href="assets/code-review.mp4" download>Download the code review (MP4, about 49 MB)</a> · <a href="source.html?file=original/CS300%20Coursework.cpp">Read the original source alongside the video</a></p>
+      <p class="note">Recorded before the enhancements. Length: 26 minutes 19 seconds. The review describes plans; the enhancement pages show the completed work.</p>
     </section>
 
     <section aria-labelledby="functionality-title">
@@ -57,6 +63,12 @@
         </article>
       </div>
     </section>
+  <section class="container section" aria-labelledby="feedback-title">
+    <h2 id="feedback-title">Feedback incorporated in the final work</h2>
+    <p>The instructor recommended baseline height and lookup counts for sorted and random input, clear ownership before rotations, and direct build instructions alongside CMake. The published algorithms stage includes the original-style BST comparison and unique_ptr rotations. The database stage includes prepared values, forward-reference imports, deliberate keys and indexes, and rollback tests. Every stage has a reproducible verification record.</p>
+    <p>The original review video remains the starting-point record. This follow-up explains how the feedback was applied rather than suggesting that the original recording includes later test results.</p>
+    <p><a href="algorithms.html">Inspect measurements and algorithm decisions</a> · <a href="databases.html">Inspect database safeguards</a> · <a href="outcomes.html">Review the five-outcome alignment</a></p>
+  </section>
   </main>
   <footer class="container">© Dmitrii Shostak · Computer Science ePortfolio</footer>
 </body>

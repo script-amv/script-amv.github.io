@@ -1,0 +1,124 @@
+Final verification · 2026-10-11 · macOS
+
+$ c++ --version
+Apple clang version 14.0.0 (clang-1400.0.29.202)
+Target: x86_64-apple-darwin21.6.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+$ cmake -S enhanced -B /tmp/cs499-final-databases-verified
+-- The CXX compiler identification is AppleClang 14.0.0.14000029
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found SQLite3: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libsqlite3.tbd (found version "3.39.5")
+-- Configuring done (2.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/cs499-final-databases-verified
+
+$ cmake --build /tmp/cs499-final-databases-verified -j 4
+[  8%] Building CXX object CMakeFiles/planner.dir/src/Repository.cpp.o
+[ 16%] Building CXX object CMakeFiles/planner.dir/src/Database.cpp.o
+[ 25%] Building CXX object CMakeFiles/planner.dir/src/Tree.cpp.o
+[ 33%] Building CXX object CMakeFiles/planner.dir/src/Service.cpp.o
+[ 41%] Building CXX object CMakeFiles/planner.dir/src/Menu.cpp.o
+[ 50%] Linking CXX static library libplanner.a
+[ 50%] Built target planner
+[ 58%] Building CXX object CMakeFiles/course_planner.dir/src/main.cpp.o
+[ 66%] Building CXX object CMakeFiles/tree_benchmark.dir/benchmarks/tree_benchmark.cpp.o
+[ 75%] Building CXX object CMakeFiles/planner_tests.dir/tests/tests.cpp.o
+[ 83%] Linking CXX executable course_planner
+[ 83%] Built target course_planner
+[ 91%] Linking CXX executable tree_benchmark
+[ 91%] Built target tree_benchmark
+[100%] Linking CXX executable planner_tests
+[100%] Built target planner_tests
+
+$ ctest --test-dir /tmp/cs499-final-databases-verified --output-on-failure
+Test project /tmp/cs499-final-databases-verified
+    Start 1: planner_tests
+1/1 Test #1: planner_tests ....................   Passed    0.07 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.08 sec
+
+$ /tmp/cs499-final-databases-verified/planner_tests
+PASS schema enables foreign keys and prerequisite index
+PASS transactional import accepts forward references and normalizes input
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS database constraints roll back missing references duplicates and cycles
+PASS CRUD uses prepared values and restricts deletion of referenced courses
+PASS database persists after reopening
+PASS menu provides import read create update and delete operations
+PASS AVL behavior remains available after database enhancement
+PASS CSV parser handles valid data and rejects unsupported formats
+18 test cases passed.
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Repository.cpp enhanced/src/Database.cpp enhanced/src/Tree.cpp enhanced/src/Service.cpp enhanced/src/Menu.cpp enhanced/src/main.cpp -lsqlite3 -o /tmp/cs499-direct-databases/course_planner
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Repository.cpp enhanced/src/Database.cpp enhanced/src/Tree.cpp enhanced/src/Service.cpp enhanced/src/Menu.cpp enhanced/tests/tests.cpp -lsqlite3 -o /tmp/cs499-direct-databases/planner_tests
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Tree.cpp enhanced/benchmarks/tree_benchmark.cpp -o /tmp/cs499-direct-databases/tree_benchmark
+
+$ /tmp/cs499-direct-databases/planner_tests
+PASS schema enables foreign keys and prerequisite index
+PASS transactional import accepts forward references and normalizes input
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS database constraints roll back missing references duplicates and cycles
+PASS CRUD uses prepared values and restricts deletion of referenced courses
+PASS database persists after reopening
+PASS menu provides import read create update and delete operations
+PASS AVL behavior remains available after database enhancement
+PASS CSV parser handles valid data and rejects unsupported formats
+18 test cases passed.
+
+$ /tmp/cs499-direct-databases/tree_benchmark
+order,n,bst_height,avl_height,bst_insert_comparisons,avl_insert_comparisons,bst_average_lookup_comparisons,avl_average_lookup_comparisons
+sorted,1000,1000,10,499500,8977,500.50,8.99
+random,1000,25,12,11143,8790,12.14,9.30
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include -fsanitize=address,undefined -fno-omit-frame-pointer enhanced/src/Repository.cpp enhanced/src/Database.cpp enhanced/src/Tree.cpp enhanced/src/Service.cpp enhanced/src/Menu.cpp enhanced/tests/tests.cpp -lsqlite3 -o /tmp/cs499-direct-databases/sanitizer_tests
+
+$ /tmp/cs499-direct-databases/sanitizer_tests
+PASS schema enables foreign keys and prerequisite index
+PASS transactional import accepts forward references and normalizes input
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS invalid import rolls back and preserves previous database
+PASS database constraints roll back missing references duplicates and cycles
+PASS CRUD uses prepared values and restricts deletion of referenced courses
+PASS database persists after reopening
+PASS menu provides import read create update and delete operations
+PASS AVL behavior remains available after database enhancement
+PASS CSV parser handles valid data and rejects unsupported formats
+18 test cases passed.
+
+Scope: named local-tool test cases only. Benchmark is an original-style BST comparison, not a database performance test. Windows and shared-service security were not verified.

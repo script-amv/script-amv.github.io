@@ -1,0 +1,83 @@
+Final verification · 2026-10-11 · macOS
+
+$ c++ --version
+Apple clang version 14.0.0 (clang-1400.0.29.202)
+Target: x86_64-apple-darwin21.6.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+$ cmake -S enhanced -B /tmp/cs499-final-software-design-verified
+-- The CXX compiler identification is AppleClang 14.0.0.14000029
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (2.2s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/cs499-final-software-design-verified
+
+$ cmake --build /tmp/cs499-final-software-design-verified -j 4
+[ 11%] Building CXX object CMakeFiles/planner.dir/src/Tree.cpp.o
+[ 22%] Building CXX object CMakeFiles/planner.dir/src/Repository.cpp.o
+[ 44%] Building CXX object CMakeFiles/planner.dir/src/Service.cpp.o
+[ 44%] Building CXX object CMakeFiles/planner.dir/src/Menu.cpp.o
+[ 55%] Linking CXX static library libplanner.a
+[ 55%] Built target planner
+[ 66%] Building CXX object CMakeFiles/planner_tests.dir/tests/tests.cpp.o
+[ 77%] Building CXX object CMakeFiles/course_planner.dir/src/main.cpp.o
+[ 88%] Linking CXX executable course_planner
+[ 88%] Built target course_planner
+[100%] Linking CXX executable planner_tests
+[100%] Built target planner_tests
+
+$ ctest --test-dir /tmp/cs499-final-software-design-verified --output-on-failure
+Test project /tmp/cs499-final-software-design-verified
+    Start 1: planner_tests
+1/1 Test #1: planner_tests ....................   Passed    0.64 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.66 sec
+
+$ /tmp/cs499-final-software-design-verified/planner_tests
+PASS sorted list, search, normalization and forward reference
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS reloading replaces catalog without accumulating duplicates
+PASS menu rejects mixed input and handles end of input
+PASS menu load, lowercase search, not found and exit
+PASS skewed tree traversal and ownership cleanup
+PASS CSV parsing, blank lines, CRLF, missing file and bad formats
+15 test cases passed.
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Repository.cpp enhanced/src/Tree.cpp enhanced/src/Service.cpp enhanced/src/Menu.cpp enhanced/src/main.cpp -o /tmp/cs499-direct-software-design/course_planner
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Repository.cpp enhanced/src/Tree.cpp enhanced/src/Service.cpp enhanced/src/Menu.cpp enhanced/tests/tests.cpp -o /tmp/cs499-direct-software-design/planner_tests
+
+$ /tmp/cs499-direct-software-design/planner_tests
+PASS sorted list, search, normalization and forward reference
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS reloading replaces catalog without accumulating duplicates
+PASS menu rejects mixed input and handles end of input
+PASS menu load, lowercase search, not found and exit
+PASS skewed tree traversal and ownership cleanup
+PASS CSV parsing, blank lines, CRLF, missing file and bad formats
+15 test cases passed.
+
+Scope: named local-tool test cases only. Benchmark is an original-style BST comparison, not a database performance test. Windows and shared-service security were not verified.

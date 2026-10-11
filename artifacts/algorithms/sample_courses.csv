@@ -1,0 +1,5 @@
+CSCI100,Introduction to Computer Science
+CSCI200,Data Structures and Algorithms,CSCI100
+CSCI300,Introduction to Algorithms,CSCI200
+CSCI400,Large Software Development,CSCI300
+MATH201,Discrete Mathematics

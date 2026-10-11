@@ -1,0 +1,3 @@
+order,n,bst_height,avl_height,bst_insert_comparisons,avl_insert_comparisons,bst_average_lookup_comparisons,avl_average_lookup_comparisons
+sorted,1000,1000,10,499500,8977,500.50,8.99
+random,1000,25,12,11143,8790,12.14,9.30

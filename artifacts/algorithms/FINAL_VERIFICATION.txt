@@ -1,0 +1,95 @@
+Final verification · 2026-10-11 · macOS
+
+$ c++ --version
+Apple clang version 14.0.0 (clang-1400.0.29.202)
+Target: x86_64-apple-darwin21.6.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+$ cmake -S enhanced -B /tmp/cs499-final-algorithms-verified
+-- The CXX compiler identification is AppleClang 14.0.0.14000029
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (1.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/cs499-final-algorithms-verified
+
+$ cmake --build /tmp/cs499-final-algorithms-verified -j 4
+[  9%] Building CXX object CMakeFiles/planner.dir/src/Repository.cpp.o
+[ 18%] Building CXX object CMakeFiles/planner.dir/src/Tree.cpp.o
+[ 27%] Building CXX object CMakeFiles/planner.dir/src/Menu.cpp.o
+[ 36%] Building CXX object CMakeFiles/planner.dir/src/Service.cpp.o
+[ 45%] Linking CXX static library libplanner.a
+[ 45%] Built target planner
+[ 63%] Building CXX object CMakeFiles/tree_benchmark.dir/benchmarks/tree_benchmark.cpp.o
+[ 63%] Building CXX object CMakeFiles/planner_tests.dir/tests/tests.cpp.o
+[ 72%] Building CXX object CMakeFiles/course_planner.dir/src/main.cpp.o
+[ 81%] Linking CXX executable course_planner
+[ 81%] Built target course_planner
+[ 90%] Linking CXX executable tree_benchmark
+[ 90%] Built target tree_benchmark
+[100%] Linking CXX executable planner_tests
+[100%] Built target planner_tests
+
+$ ctest --test-dir /tmp/cs499-final-algorithms-verified --output-on-failure
+Test project /tmp/cs499-final-algorithms-verified
+    Start 1: planner_tests
+1/1 Test #1: planner_tests ....................   Passed    0.03 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.04 sec
+
+$ /tmp/cs499-final-algorithms-verified/planner_tests
+PASS sorted list, search, normalization and forward reference
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS reloading replaces catalog without accumulating duplicates
+PASS menu rejects mixed input and handles end of input
+PASS menu load, lowercase search, not found and exit
+PASS AVL tree stays logarithmic for sorted insertion
+PASS CSV parsing, blank lines, CRLF, missing file and bad formats
+16 test cases passed.
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Repository.cpp enhanced/src/Tree.cpp enhanced/src/Service.cpp enhanced/src/Menu.cpp enhanced/src/main.cpp -o /tmp/cs499-direct-algorithms/course_planner
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Repository.cpp enhanced/src/Tree.cpp enhanced/src/Service.cpp enhanced/src/Menu.cpp enhanced/tests/tests.cpp -o /tmp/cs499-direct-algorithms/planner_tests
+
+$ c++ -std=c++17 -Wall -Wextra -Wpedantic -Ienhanced/include enhanced/src/Tree.cpp enhanced/benchmarks/tree_benchmark.cpp -o /tmp/cs499-direct-algorithms/tree_benchmark
+
+$ /tmp/cs499-direct-algorithms/planner_tests
+PASS sorted list, search, normalization and forward reference
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS invalid import preserves existing catalog
+PASS reloading replaces catalog without accumulating duplicates
+PASS menu rejects mixed input and handles end of input
+PASS menu load, lowercase search, not found and exit
+PASS AVL tree stays logarithmic for sorted insertion
+PASS CSV parsing, blank lines, CRLF, missing file and bad formats
+16 test cases passed.
+
+$ /tmp/cs499-direct-algorithms/tree_benchmark
+order,n,bst_height,avl_height,bst_insert_comparisons,avl_insert_comparisons,bst_average_lookup_comparisons,avl_average_lookup_comparisons
+sorted,1000,1000,10,499500,8977,500.50,8.99
+random,1000,25,12,11143,8790,12.14,9.30
+
+Scope: named local-tool test cases only. Benchmark is an original-style BST comparison, not a database performance test. Windows and shared-service security were not verified.

@@ -35,4 +35,26 @@ video { display: block; width: 100%; max-height: 510px; background: #111b2a; }
 .note { color: var(--muted); font-size: .92rem; }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 footer { padding: 2rem 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
-@media (max-width: 700px) { .hero { padding: 4rem 0; } .grid { grid-template-columns: 1fr; } }
+.skip-link { position: absolute; left: 1rem; top: -5rem; padding: .5rem 1rem; background: white; z-index: 10; }
+.skip-link:focus { top: .5rem; }
+a { color: var(--accent-dark); text-underline-offset: .2em; }
+a:focus-visible, select:focus-visible, video:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+nav { flex-wrap: wrap; gap: .6rem 1.25rem; padding: 1rem 0; }
+nav a { font-size: .95rem; }
+.hero { padding: 4rem 0 2rem; }
+.section { padding-bottom: 2rem; }
+.narrative { max-width: 760px; }
+.narrative p { margin: 1.2rem 0; }
+.secondary { background: white; color: var(--accent-dark); border: 1px solid var(--accent); }
+.secondary:hover { color: white; }
+.architecture { padding: 1.2rem; background: white; border: 1px solid var(--line); border-left: 4px solid var(--accent); font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+pre { padding: 1rem; background: #102033; color: #edf4ff; border-radius: .4rem; overflow-x: auto; font-size: .85rem; line-height: 1.6; }
+pre code { white-space: pre; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: white; }
+caption { text-align: left; padding: .7rem 0; font-weight: 650; }
+th, td { border: 1px solid var(--line); padding: .8rem; text-align: left; vertical-align: top; }
+thead { background: #eaf0f7; }
+select { width: 100%; margin: .5rem 0; padding: .8rem; font: inherit; color: var(--ink); background: white; border: 1px solid var(--line); }
+.source-block { max-height: 75vh; }
+@media (max-width: 700px) { .hero { padding: 3rem 0 1rem; } .grid { grid-template-columns: 1fr; } nav .brand { width: 100%; } .article { padding-top: 2rem; } }
